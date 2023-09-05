@@ -1,8 +1,9 @@
 import { createServer } from 'http'
 import { readFileSync } from 'fs'
 import { dbElement, Request, Response } from './interfaces'
+import path from 'path'
 
-const db = JSON.parse(readFileSync('./fake-db.json').toString())
+const db = JSON.parse(readFileSync(path.join(__dirname, '../fake-db.json')).toString())
 
 const handler = async (req: Request, res: Response) => {
 	let bodyStr = ''
