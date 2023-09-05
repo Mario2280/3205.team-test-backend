@@ -3,8 +3,6 @@ import { UserDto } from './dto/user.dto';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-console.log(join(__dirname, '../fake-db.json'))
-
 const db: Array<UserDto> = JSON.parse(
   readFileSync(join(__dirname, '../fake-db.json')).toString(),
 );
@@ -12,7 +10,11 @@ const db: Array<UserDto> = JSON.parse(
 @Controller()
 export class AppController {
   @Get()
-  getHello(@Body() { email, number }: UserDto) {
+  async getHello(@Body() { email }: UserDto) {
+    const delay = new Promise<void>((resolve) =>
+      setTimeout(() => resolve(), 5000),
+    );
+    await delay;
     return db.filter((user) => user.email == email);
   }
 }
